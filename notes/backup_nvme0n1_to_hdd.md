@@ -67,7 +67,34 @@ e2image -ra -p /dev/nvme0n1p3 /dev/sdb3
 
 Test the newly updated part on the external drive.
 
+# Fixing the PC
+Run live OS USB on the broken PC.
+Connect to the internet.
 
+```
+iwctl device list
+iwctl station wlan0 scan
+iwctl station wlan0 get-networks
+iwctl station wlan0 connect <SSID>
+```
 
+Mount the hard drive (where the broken Arch is installed) on the PC and change to this system:
+```
+mkdir /mnt/os
+mount /dev/nvmen0n1p2 /mnt/os
+mount /dev/nvmen0n1p1 /mnt/os/boot
+mount /dev/nvmen0n1p3 /mnt/os/home
+arch-chroot /mnt/os
+```
+
+```
+pacman -S dracut
+pacman -S linux linux-api-headers linux-firmware linux-firmware-whence util-linux
+```
+See magic command in this [thread](https://forum.endeavouros.com/t/reboot-into-firmware-interface-problem/35427/6)
+
+I was not able to find `kernel-install-for-dracut` module.
+
+Poweroff, remove USB stick, power on, and the machine went up right.
 
 
