@@ -52,6 +52,22 @@ I did not add any file system format, e.g. `ext4`.
 
 Now we should have partition on my external drive.
 
+Start the broken PC and boot up with the live USB.
 Plug the external drive to broken PC.
+Identify the hard drives:
+```
+lsblk -lp
+```
+
+then use `e2image` tool.
+
+```
+e2image -ra -p /dev/nvme0n1p3 /dev/sdb3
+```
+
+Test the newly updated part on the external drive.
+
+
+
 
 
